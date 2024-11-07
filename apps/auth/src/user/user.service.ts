@@ -14,6 +14,9 @@ export class UserService {
         return this.userRepository.create({
             ...createUserDto,
             password: await bcrypt.hash(createUserDto.password, 10)
+        }).then((user) => {
+            delete user.password;
+            return user;
         })
     }
 
