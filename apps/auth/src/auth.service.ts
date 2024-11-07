@@ -4,10 +4,11 @@ import { JwtService } from '@nestjs/jwt';
 import { UserDocument } from './user/models/user.schema';
 import { TokenPayLoad } from './interfaces/token-payload.interface';
 import { Response } from 'express';
+import { TokenService } from './token/token.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly configService: ConfigService, private readonly jwtService: JwtService) {}
+  constructor(private readonly configService: ConfigService, private readonly jwtService: JwtService, private readonly tokenService: TokenService) {}
 
   async login(user: UserDocument, response: Response) {
     const tokenPayLoad: TokenPayLoad = {
@@ -15,17 +16,30 @@ export class AuthService {
     }
 
     const expires = new Date()
-    expires.setSeconds(
-      expires.getSeconds() + this.configService.get("JWT_EXPIRATION")
+    expires.setDate(
+      expires.getDate() + this.configService.get("JWT_REFRESH_EXPIRATION")
     )
 
-    const token = this.jwtService.sign(tokenPayLoad)
+    const refreshToken = this.jwtService.sign(tokenPayLoad, 
+      {
+        expiresIn: `2m`,
+        secret: this.configService.get("JWT_REFRESH_SECRET")
+      })
 
-    response.cookie("Authentication", token, {
+    this.tokenService.create({ refreshToken, userId: user._id.toString()})
+
+    response.cookie("Authentication", refreshToken, {
       httpOnly: true,
       expires
     })
 
-    return token
+    const accessToken = this.jwtService.sign(tokenPayLoad,
+      {
+        expiresIn: `${this.configService.get("JWT_ACCESS_EXPIRATION")}m`,
+        secret: this.configService.get("JWT_ACCESS_SECRET")
+      }
+    )
+
+    return accessToken
   }
 }

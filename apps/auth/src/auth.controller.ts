@@ -6,7 +6,6 @@ import { UserDocument } from './user/models/user.schema';
 import { Response } from 'express';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { compareSync } from 'bcryptjs';
 
 @Controller()
 export class AuthController {
@@ -18,8 +17,9 @@ export class AuthController {
     @CurrentUser() user: UserDocument,
     @Res({ passthrough: true }) response: Response
   ) {
-    await this.authService.login(user, response)
-    response.send(user)
+    const accessToken = await this.authService.login(user, response)
+    delete user.password
+    response.send({ user, accessToken })
   }
 
   @UseGuards(JwtAuthGuard)
