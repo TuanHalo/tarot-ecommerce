@@ -1,9 +1,8 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateTokenDto {
-    @IsNotEmpty()
-    refreshToken: string;
+  @IsNotEmpty()
+  refreshToken: string;
 
-    @IsNotEmpty()
-    userId: string
+  userId: string;
 }

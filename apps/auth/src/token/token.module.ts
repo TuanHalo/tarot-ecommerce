@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TokenService } from './token.service';
-import { DatabaseModule, LoggerModule } from '@app/common';
+import { DatabaseModule } from '@app/common';
 import { TokenDocument, TokenSchema } from './models/token.schema';
 import { TokenRepository } from './token.repository';
 import { TokenController } from './token.controller';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [

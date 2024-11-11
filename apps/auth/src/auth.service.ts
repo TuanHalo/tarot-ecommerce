@@ -8,38 +8,39 @@ import { TokenService } from './token/token.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly configService: ConfigService, private readonly jwtService: JwtService, private readonly tokenService: TokenService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly jwtService: JwtService,
+    private readonly tokenService: TokenService,
+  ) {}
 
   async login(user: UserDocument, response: Response) {
     const tokenPayLoad: TokenPayLoad = {
-      userId: user._id.toHexString()
-    }
+      userId: user._id.toHexString(),
+    };
 
-    const expires = new Date()
+    const expires = new Date();
     expires.setDate(
-      expires.getDate() + this.configService.get("JWT_REFRESH_EXPIRATION")
-    )
+      expires.getDate() + this.configService.get('JWT_REFRESH_EXPIRATION'),
+    );
 
-    const refreshToken = this.jwtService.sign(tokenPayLoad, 
-      {
-        expiresIn: `2m`,
-        secret: this.configService.get("JWT_REFRESH_SECRET")
-      })
+    const refreshToken = this.jwtService.sign(tokenPayLoad, {
+      expiresIn: `${this.configService.get('JWT_REFRESH_EXPIRATION')}d`,
+      secret: this.configService.get('JWT_REFRESH_SECRET'),
+    });
 
-    this.tokenService.create({ refreshToken, userId: user._id.toString()})
+    this.tokenService.create({ refreshToken, userId: user._id.toString() });
 
-    response.cookie("Authentication", refreshToken, {
+    response.cookie('Authentication', refreshToken, {
       httpOnly: true,
-      expires
-    })
+      expires,
+    });
 
-    const accessToken = this.jwtService.sign(tokenPayLoad,
-      {
-        expiresIn: `${this.configService.get("JWT_ACCESS_EXPIRATION")}m`,
-        secret: this.configService.get("JWT_ACCESS_SECRET")
-      }
-    )
+    const accessToken = this.jwtService.sign(tokenPayLoad, {
+      expiresIn: `${this.configService.get('JWT_ACCESS_EXPIRATION')}m`,
+      secret: this.configService.get('JWT_ACCESS_SECRET'),
+    });
 
-    return accessToken
+    return accessToken;
   }
 }
