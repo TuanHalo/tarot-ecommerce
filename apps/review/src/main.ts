@@ -1,12 +1,12 @@
 import { NestFactory } from '@nestjs/core';
-import { ProductModule } from './product.module';
+import { ReviewModule } from './review.module';
 import { ConfigService } from '@nestjs/config';
+import { Transport } from '@nestjs/microservices';
 import { ValidationPipe } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
-import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
-  const app = await NestFactory.create(ProductModule);
+  const app = await NestFactory.create(ReviewModule);
   const configService = app.get(ConfigService);
   app.connectMicroservice({
     transport: Transport.TCP,

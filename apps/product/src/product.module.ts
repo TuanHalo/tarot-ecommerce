@@ -7,7 +7,6 @@ import { AUTH_SERVICE, DatabaseModule, LoggerModule } from '@app/common';
 import { ProductDocument, ProductSchema } from './models/product.schema';
 import { ProductRepository } from './product.repository';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { ReviewModule } from './review/review.module';
 
 @Module({
   imports: [
@@ -38,7 +37,6 @@ import { ReviewModule } from './review/review.module';
         inject: [ConfigService],
       },
     ]),
-    ReviewModule,
   ],
   controllers: [ProductController],
   providers: [ProductService, ProductRepository],

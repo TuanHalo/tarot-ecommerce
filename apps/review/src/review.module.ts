@@ -1,11 +1,12 @@
-import { Module } from '@nestjs/common';
-import { ReviewService } from './review.service';
-import { ReviewController } from './review.controller';
 import { AUTH_SERVICE, DatabaseModule, LoggerModule } from '@app/common';
+import { Module } from '@nestjs/common';
 import { ReviewDocument, ReviewSchema } from './models/review.schema';
-import { ReviewRepository } from './review.repository';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ReviewController } from './review.controller';
+import { ReviewService } from './review.service';
+import { ReviewRepository } from './review.repository';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
@@ -14,6 +15,16 @@ import { ConfigService } from '@nestjs/config';
     DatabaseModule.forFeature([
       { name: ReviewDocument.name, schema: ReviewSchema },
     ]),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: Joi.object({
+        MONGODB_URI: Joi.string().required(),
+        HTTP_PORT: Joi.number().required(),
+        TCP_PORT: Joi.number().required(),
+        AUTH_HOST: Joi.string().required(),
+        AUTH_PORT: Joi.number().required(),
+      }),
+    }),
     ClientsModule.registerAsync([
       {
         name: AUTH_SERVICE,

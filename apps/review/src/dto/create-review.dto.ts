@@ -12,6 +12,10 @@ export class CreateReviewDto {
   @IsNotEmpty()
   productId: string;
 
+  @IsString()
+  @IsNotEmpty()
+  consultantId: string;
+
   @IsInt()
   @Min(1)
   @Max(5)

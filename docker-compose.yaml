@@ -11,6 +11,7 @@ services:
       - 3000:3000
     volumes:
       - .:/usr/src/app
+
   product:
     build:
       context: .
@@ -20,9 +21,23 @@ services:
     env_file:
       - ./apps/product/.env
     ports:
+      - 3001:3001
+    volumes:
+      - .:/usr/src/app
+
+  review:
+    build:
+      context: .
+      dockerfile: ./apps/review/Dockerfile
+      target: development
+    command: yarn start:dev review
+    env_file:
+      - ./apps/review/.env
+    ports:
       - 3002:3002
     volumes:
       - .:/usr/src/app
+
   mongo:
     image: mongo
     ports:

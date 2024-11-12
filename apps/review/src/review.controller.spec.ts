@@ -3,18 +3,20 @@ import { ReviewController } from './review.controller';
 import { ReviewService } from './review.service';
 
 describe('ReviewController', () => {
-  let controller: ReviewController;
+  let reviewController: ReviewController;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const app: TestingModule = await Test.createTestingModule({
       controllers: [ReviewController],
       providers: [ReviewService],
     }).compile();
 
-    controller = module.get<ReviewController>(ReviewController);
+    reviewController = app.get<ReviewController>(ReviewController);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  describe('root', () => {
+    it('should return "Hello World!"', () => {
+      expect(reviewController.getHello()).toBe('Hello World!');
+    });
   });
 });

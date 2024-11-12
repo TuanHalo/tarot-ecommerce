@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 import { ReviewService } from './review.service';
-import { CreateReviewDto } from './dto/create-review.dto';
 import { CurrentUser, JwtAuthGuard, UserDto } from '@app/common';
+import { CreateReviewDto } from './dto/create-review.dto';
 
-@Controller('review')
+@Controller()
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
@@ -17,7 +17,12 @@ export class ReviewController {
   }
 
   @Get('product/:id')
-  findOfProduct(@Param('id') id: string) {
-    return this.reviewService.findOfProduct(id);
+  findOfProduct(@Param('id') productId: string) {
+    return this.reviewService.findOfProduct(productId);
+  }
+
+  @Get('consultant/:id')
+  findOfConsultant(@Param('id') consultantId: string) {
+    return this.reviewService.findOfConsultant(consultantId);
   }
 }

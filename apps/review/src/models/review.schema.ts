@@ -10,6 +10,9 @@ export class ReviewDocument extends AbstractDocument {
   @Prop({ type: SchemaTypes.ObjectId })
   userId: Types.ObjectId;
 
+  @Prop({ type: SchemaTypes.ObjectId })
+  consultantId: Types.ObjectId;
+
   @Prop()
   star: number;
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateReviewDto } from './dto/create-review.dto';
-import { ReviewRepository } from './review.repository';
 import { Types } from 'mongoose';
+import { ReviewRepository } from './review.repository';
+import { CreateReviewDto } from './dto/create-review.dto';
 
 @Injectable()
 export class ReviewService {
@@ -12,12 +12,19 @@ export class ReviewService {
       ...createReviewDto,
       productId: new Types.ObjectId(createReviewDto.productId),
       userId: new Types.ObjectId(userId),
+      consultantId: new Types.ObjectId(createReviewDto.consultantId),
     });
   }
 
   async findOfProduct(productId: string) {
     return await this.reviewRepository.find({
       productId: new Types.ObjectId(productId),
+    });
+  }
+
+  async findOfConsultant(consultantId: string) {
+    return await this.reviewRepository.find({
+      consultantId: new Types.ObjectId(consultantId),
     });
   }
 }
