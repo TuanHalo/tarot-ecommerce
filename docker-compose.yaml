@@ -4,14 +4,41 @@ services:
       context: .
       dockerfile: ./apps/auth/Dockerfile
       target: development
-    restart: always
     command: yarn start:dev auth
     env_file:
       - ./apps/auth/.env
     ports:
-      - '3000:3000'
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+
+  product:
+    build:
+      context: .
+      dockerfile: ./apps/product/Dockerfile
+      target: development
+    command: yarn start:dev product
+    env_file:
+      - ./apps/product/.env
+    ports:
+      - 3001:3001
+    volumes:
+      - .:/usr/src/app
+
+  review:
+    build:
+      context: .
+      dockerfile: ./apps/review/Dockerfile
+      target: development
+    command: yarn start:dev review
+    env_file:
+      - ./apps/review/.env
+    ports:
+      - 3002:3002
     volumes:
       - .:/usr/src/app
 
   mongo:
     image: mongo
+    ports:
+      - 27017:27017

@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UserModule } from './user/user.module';
-import { LoggerModule } from '@app/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { LocalStrategy } from './strategy/local.strategy';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { TokenModule } from './token/token.module';
+import { LoggerModule } from '@app/common';
 
 @Module({
   imports: [
@@ -25,10 +25,10 @@ import { TokenModule } from './token/token.module';
         JWT_REFRESH_EXPIRATION: Joi.string().required(),
         JWT_ACCESS_EXPIRATION: Joi.string().required(),
         HTTP_PORT: Joi.number().required(),
-        TCP_PORT: Joi.number().required()
-      })
+        TCP_PORT: Joi.number().required(),
+      }),
     }),
-    TokenModule
+    TokenModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],
