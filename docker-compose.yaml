@@ -38,6 +38,32 @@ services:
     volumes:
       - .:/usr/src/app
 
+  schedule:
+    build: 
+      context: .
+      dockerfile: ./apps/schedule/Dockerfile
+      target: development
+    command: yarn start:dev schedule
+    env_file:
+      - ./apps/schedule/.env
+    ports:
+      - 3003:3003
+    volumes:
+      - .:/usr/src/app
+
+  booking:
+    build: 
+      context: .
+      dockerfile: ./apps/booking/Dockerfile
+      target: development
+    command: yarn start:dev booking
+    env_file:
+      - ./apps/booking/.env
+    ports:
+      - 3004:3004
+    volumes:
+      - .:/usr/src/app
+
   mongo:
     image: mongo
     ports:
