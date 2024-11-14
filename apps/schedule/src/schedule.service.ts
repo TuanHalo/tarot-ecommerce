@@ -96,6 +96,8 @@ export class ScheduleService {
 
     let result: any = [];
 
+    console.log(timeSchedule, bookingTimeParse)
+
     function countTime(step: number) {
       let time: Array<TimeRange[]> = [[], [], []];
       let t = 0,
@@ -138,12 +140,14 @@ export class ScheduleService {
               endTime: curr + step,
             });
             curr += step;
-          } else {
+          } else if (b === bookingTimeParse.length) {
             time[Math.floor(curr / 1440)].push({
               startTime: curr,
               endTime: curr + step,
             });
             curr += step;
+          } else {
+            curr = bookingTimeParse[b][1];
           }
         } else {
           t += 1;
