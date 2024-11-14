@@ -15,11 +15,11 @@ export class AuthController {
   @Post('login')
   async login(
     @CurrentUser() user: UserDocument,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ) {
-    const accessToken = await this.authService.login(user, response)
-    delete user.password
-    response.send({ user, accessToken })
+    const accessToken = await this.authService.login(user, response);
+    delete user.password;
+    response.send({ user, accessToken });
   }
 
   @UseGuards(JwtAuthGuard)

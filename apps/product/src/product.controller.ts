@@ -14,6 +14,7 @@ import { ProductService } from './product.service';
 import { CurrentUser, JwtAuthGuard, UserDto } from '@app/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller()
 export class ProductController {
@@ -56,5 +57,10 @@ export class ProductController {
   @Delete(':id')
   deleteOne(@Param('id') id: string) {
     return this.productService.deleteOne(id);
+  }
+
+  @MessagePattern('productDetail')
+  productDetail(productId: string) {
+    return this.productService.findOne(productId);
   }
 }

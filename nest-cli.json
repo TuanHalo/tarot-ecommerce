@@ -43,6 +43,24 @@
       "compilerOptions": {
         "tsConfigPath": "apps/review/tsconfig.app.json"
       }
+    },
+    "schedule": {
+      "type": "application",
+      "root": "apps/schedule",
+      "entryFile": "main",
+      "sourceRoot": "apps/schedule/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/schedule/tsconfig.app.json"
+      }
+    },
+    "booking": {
+      "type": "application",
+      "root": "apps/booking",
+      "entryFile": "main",
+      "sourceRoot": "apps/booking/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/booking/tsconfig.app.json"
+      }
     }
   },
   "monorepo": true,
