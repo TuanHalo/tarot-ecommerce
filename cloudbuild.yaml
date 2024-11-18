@@ -78,3 +78,5 @@ steps:
       'push',
       'asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/schedule/production'
     ]
+options:
+  logging: REGIONAL_USER_OWNED_BUCKET
