@@ -34,6 +34,7 @@ export class ProductService {
       ...createProductDto,
       consultantId: new Types.ObjectId(consultantId),
       sold: 0,
+      review: 0,
     });
   }
 

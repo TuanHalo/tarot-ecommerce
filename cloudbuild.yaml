@@ -1,0 +1,80 @@
+steps:
+  # Auth
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/auth/production',
+      'f',
+      'apps/auth/Dockerfile',
+      '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      'asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/auth/production'
+    ]
+
+  # Booking
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/booking/production',
+      'f',
+      'apps/booking/Dockerfile',
+      '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      'asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/booking/production'
+    ]
+
+  # Product
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/product/production',
+      'f',
+      'apps/product/Dockerfile',
+      '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      'asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/product/production'
+    ]
+
+  # Review
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/review/production',
+      'f',
+      'apps/review/Dockerfile',
+      '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      'asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/review/production'
+    ]
+
+  # Schedule
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t',
+      'asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/schedule/production',
+      'f',
+      'apps/schedule/Dockerfile',
+      '.'
+    ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      'asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/schedule/production'
+    ]

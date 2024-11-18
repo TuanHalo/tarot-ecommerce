@@ -11,6 +11,7 @@ import { BOOKING_SERVICE, PRODUCT_SERVICE } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom, min } from 'rxjs';
 import { TimeRange } from './models/schedule.schema';
+import { GetScheduleResultDto } from './dto/get-schedule-result-dto';
 
 @Injectable()
 export class ScheduleService {
@@ -62,10 +63,30 @@ export class ScheduleService {
       'saturday',
       'sunday',
     ];
-    const current = new Date();
+    const MONTHNAME = [
+      '',
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    const now = new Date();
+    const current = new Date(
+      now.getTime() + (7 * 60 - now.getTimezoneOffset()) * 60000,
+    );
+    const tomorrow = new Date(current.getTime() + 24 * 60 * 60 * 1000);
+    const dayAfterTomorrow = new Date(tomorrow.getTime() + 24 * 60 * 60 * 1000);
     const dayOfWeek = current.getDay() - 1;
     let minute =
-      (current.getHours() + 7) * 60 +
+      current.getHours() * 60 +
       current.getMinutes() +
       5 -
       ((current.getHours() * 60 + current.getMinutes()) % 5);
@@ -96,10 +117,33 @@ export class ScheduleService {
 
     let result: any = [];
 
-    console.log(timeSchedule, bookingTimeParse)
-
     function countTime(step: number) {
-      let time: Array<TimeRange[]> = [[], [], []];
+      let time: GetScheduleResultDto = [
+        {
+          day: (
+            current.getDate() +
+            ' ' +
+            MONTHNAME[current.getMonth()]
+          ).toString(),
+          list: [],
+        },
+        {
+          day: (
+            tomorrow.getDate() +
+            ' ' +
+            MONTHNAME[tomorrow.getMonth()]
+          ).toString(),
+          list: [],
+        },
+        {
+          day: (
+            dayAfterTomorrow.getDate() +
+            ' ' +
+            MONTHNAME[dayAfterTomorrow.getMonth()]
+          ).toString(),
+          list: [],
+        },
+      ];
       let t = 0,
         b = 0,
         curr = Math.max(timeSchedule[0][0], minute);
@@ -135,13 +179,13 @@ export class ScheduleService {
             b < bookingTimeParse.length &&
             curr + step <= bookingTimeParse[b][0]
           ) {
-            time[Math.floor(curr / 1440)].push({
+            time[Math.floor(curr / 1440)].list.push({
               startTime: curr,
               endTime: curr + step,
             });
             curr += step;
           } else if (b === bookingTimeParse.length) {
-            time[Math.floor(curr / 1440)].push({
+            time[Math.floor(curr / 1440)].list.push({
               startTime: curr,
               endTime: curr + step,
             });

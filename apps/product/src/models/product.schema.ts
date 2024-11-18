@@ -24,6 +24,9 @@ export class ProductDocument extends AbstractDocument {
 
   @Prop()
   description: string;
+
+  @Prop()
+  review: number;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(ProductDocument);

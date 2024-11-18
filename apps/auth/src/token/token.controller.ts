@@ -1,8 +1,6 @@
 import { Controller, Post, Req, UnauthorizedException } from '@nestjs/common';
 import { TokenService } from './token.service';
 import { Request } from 'express';
-import { CurrentUser } from '@app/common';
-import { UserDocument } from '../user/models/user.schema';
 
 @Controller()
 export class TokenController {
