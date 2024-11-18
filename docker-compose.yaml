@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: ./apps/auth/Dockerfile
       target: development
-    command: pnpm run start:dev auth
+    command: yarn start:dev auth
     env_file:
       - ./apps/auth/.env
     ports:
@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: ./apps/product/Dockerfile
       target: development
-    command: pnpm run start:dev product
+    command: yarn start:dev product
     env_file:
       - ./apps/product/.env
     ports:
@@ -30,7 +30,7 @@ services:
       context: .
       dockerfile: ./apps/review/Dockerfile
       target: development
-    command: pnpm run start:dev review
+    command: yarn start:dev review
     env_file:
       - ./apps/review/.env
     ports:
@@ -43,7 +43,7 @@ services:
       context: .
       dockerfile: ./apps/schedule/Dockerfile
       target: development
-    command: pnpm run start:dev schedule
+    command: yarn start:dev schedule
     env_file:
       - ./apps/schedule/.env
     ports:
@@ -56,7 +56,7 @@ services:
       context: .
       dockerfile: ./apps/booking/Dockerfile
       target: development
-    command: pnpm run start:dev booking
+    command: yarn start:dev booking
     env_file:
       - ./apps/booking/.env
     ports:

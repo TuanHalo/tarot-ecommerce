@@ -1,5 +1,5 @@
 {
-  "name": "tarot-ecommerce-backend",
+  "name": "tarotbooking",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -11,13 +11,13 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/apps/tarot-ecommerce-backend/main",
+    "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/tarot-ecommerce-backend/test/jest-e2e.json"
+    "test:e2e": "docker-compose --project-directory ./e2e up e2e"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -85,5 +85,8 @@
     "moduleNameMapper": {
       "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1"
     }
-  }
+  },
+  "workspaces": [
+    "apps/**"
+  ]
 }

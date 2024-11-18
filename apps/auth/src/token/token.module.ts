@@ -11,13 +11,13 @@ import { LoggerModule } from 'nestjs-pino';
   imports: [
     DatabaseModule,
     DatabaseModule.forFeature([
-      { name: TokenDocument.name, schema: TokenSchema}
+      { name: TokenDocument.name, schema: TokenSchema },
     ]),
     LoggerModule,
-    JwtModule
+    JwtModule,
   ],
   providers: [TokenService, TokenRepository],
   controllers: [TokenController],
-  exports: [TokenService]
+  exports: [TokenService],
 })
 export class TokenModule {}
