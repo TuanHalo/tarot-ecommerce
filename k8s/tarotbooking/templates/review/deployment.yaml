@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: review
+  name: review
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: review
+  template:
+    metadata:
+      labels:
+        app: review
+    spec:
+      containers:
+      - image: asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/review/production
+        name: review
+        env:
+          - name: MONGODB_URI
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: connectionString
+          - name: HTTP_PORT
+            value: '3002'
+          - name: TCP_PORT
+            value: '4002'
+          - name: AUTH_HOST
+            value: auth-tcp
+          - name: AUTH_PORT
+            value: '4000'
+        ports:
+          - containerPort: 3002

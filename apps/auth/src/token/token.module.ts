@@ -4,8 +4,8 @@ import { DatabaseModule } from '@app/common';
 import { TokenDocument, TokenSchema } from './models/token.schema';
 import { TokenRepository } from './token.repository';
 import { TokenController } from './token.controller';
-import { JwtModule } from '@nestjs/jwt';
 import { LoggerModule } from 'nestjs-pino';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: auth
+  name: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - image: asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/auth/production
+          name: auth
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: connectionString
+            - name: JWT_REFRESH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-refresh
+                  key: jwtRefreshSecret
+            - name: JWT_ACCESS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-access
+                  key: jwtAccessSecret
+            - name: JWT_REFRESH_EXPIRATION
+              value: '7'
+            - name: JWT_ACCESS_EXPIRATION
+              value: '15'
+            - name: HTTP_PORT
+              value: '3000'
+            - name: TCP_PORT
+              value: '4000'
+          ports:
+            - containerPort: 3000
+            - containerPort: 4000

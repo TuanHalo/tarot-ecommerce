@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: booking
+  name: booking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: booking
+  template:
+    metadata:
+      labels:
+        app: booking
+    spec:
+      containers:
+        - image: asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/booking/production
+          name: booking
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: connectionString
+            - name: HTTP_PORT
+              value: '3004'
+            - name: TCP_PORT
+              value: '4004'
+            - name: AUTH_HOST
+              value: auth-tcp
+            - name: AUTH_PORT
+              value: '4000'
+          ports:
+            - containerPort: 3004
+            - containerPort: 4004
+            

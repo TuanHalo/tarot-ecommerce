@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { TokenRepository } from './token.repository';
 import { CreateTokenDto } from './dto/create-token.dto';
-import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class TokenService {

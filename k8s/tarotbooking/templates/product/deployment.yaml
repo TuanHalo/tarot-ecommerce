@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: product
+  name: product
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product
+  template:
+    metadata:
+      labels:
+        app: product
+    spec:
+      containers:
+      - image: asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/product/production
+        name: product
+        env:
+          - name: MONGODB_URI
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: connectionString
+          - name: HTTP_PORT
+            value: '3001'
+          - name: TCP_PORT
+            value: '4001'
+          - name: AUTH_HOST
+            value: auth-tcp
+          - name: AUTH_PORT
+            value: '4000'
+        ports:
+          - containerPort: 3001
+          - containerPort: 4001

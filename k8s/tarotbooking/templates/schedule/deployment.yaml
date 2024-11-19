@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: schedule
+  name: schedule
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: schedule
+  template:
+    metadata:
+      labels:
+        app: schedule
+    spec:
+      containers:
+      - image: asia-southeast1-docker.pkg.dev/river-psyche-441717-d7/schedule/production
+        name: schedule
+        env:
+          - name: MONGODB_URI
+            valueFrom:
+              secretKeyRef:
+                name: mongodb
+                key: connectionString
+          - name: HTTP_PORT
+            value: '3003'
+          - name: TCP_PORT
+            value: '4003'
+          - name: AUTH_HOST
+            value: auth-tcp
+          - name: AUTH_PORT
+            value: '4000'
+          - name: BOOKING_HOST
+            value: booking-tcp
+          - name: BOOKING_PORT
+            value: '4004'
+          - name: PRODUCT_HOST
+            value: product-tcp
+          - name: PRODUCT_PORT
+            value: '4001'
+        ports:
+          - containerPort: 3003

@@ -85,8 +85,5 @@
     "moduleNameMapper": {
       "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1"
     }
-  },
-  "workspaces": [
-    "apps/**"
-  ]
+  }
 }

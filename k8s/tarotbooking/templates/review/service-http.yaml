@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: review
+  name: review-http
+spec:
+  ports:
+  - name: "http"
+    port: 3002
+    protocol: TCP
+    targetPort: 3002
+  selector:
+    app: review
+  type: NodePort

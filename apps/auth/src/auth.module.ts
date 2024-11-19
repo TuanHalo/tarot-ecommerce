@@ -6,9 +6,9 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { LocalStrategy } from './strategy/local.strategy';
 import { JwtStrategy } from './strategy/jwt.strategy';
-import { JwtModule } from '@nestjs/jwt';
 import { TokenModule } from './token/token.module';
 import { LoggerModule } from '@app/common';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
